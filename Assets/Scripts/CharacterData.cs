@@ -1,7 +1,9 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class CharacterData : MonoBehaviour
 {
+    [SerializeField] private List<MonoBehaviour> _levelUpActions;
 
     [SerializeField] private int _score = 0;
     [SerializeField] private int _currentLevel = 1;
@@ -25,5 +27,11 @@ public class CharacterData : MonoBehaviour
         _currentLevel++;
         _score -= _scoreToNextLevel;
         _scoreToNextLevel += 10;
+
+        foreach(var actions in _levelUpActions)
+        {
+            if (actions is ILevelUp levelUp == false) return;
+            levelUp.LevelUp(this, _currentLevel);
+        }
     }
 }
