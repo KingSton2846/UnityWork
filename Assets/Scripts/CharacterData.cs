@@ -2,15 +2,28 @@ using UnityEngine;
 
 public class CharacterData : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    [SerializeField] private int _score = 0;
+    [SerializeField] private int _currentLevel = 1;
+    [SerializeField] private int _scoreToNextLevel = 20;
+
+    public int Score => _score;
+    public int CurrentLevel => _currentLevel;
+    public int ScoreToNextLevel => _scoreToNextLevel;
+
+    public void ScoreUp(int score)
     {
-        
+        _score += score;
+        if(_score >= _scoreToNextLevel)
+        {
+            LevelUp();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void LevelUp()
     {
-        
+        _currentLevel++;
+        _score -= _scoreToNextLevel;
+        _scoreToNextLevel += 10;
     }
 }
