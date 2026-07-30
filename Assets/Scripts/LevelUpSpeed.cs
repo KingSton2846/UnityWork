@@ -2,16 +2,20 @@ using UnityEngine;
 
 public class LevelUpSpeed : MonoBehaviour, ILevelUp
 {
-    private PlayerController _playerController;
     [SerializeField] private int _minLevel = 5;
     public int MinLevel => _minLevel;
 
+    /// <summary>
+    /// Поднимает скорость каждые MinLevel уровней на значение уровня
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="level"></param>
     public void LevelUp(CharacterData data, int level)
     {
         if (level %_minLevel == 0) return;
-        _playerController = GetComponent<PlayerController>();
-        if (_playerController == null) return;
+        PlayerController playerController = GetComponent<PlayerController>();
+        if (playerController == null) return;
 
-        _playerController.SpeedMod = level;
+        playerController.LoadSpeedMod(level);
     }
 }

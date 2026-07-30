@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class CharacterData : MonoBehaviour
 {
+    //Список логик подниятия уровней
     [SerializeField] private List<MonoBehaviour> _levelUpActions;
 
     [SerializeField] private int _score = 0;
@@ -22,6 +23,9 @@ public class CharacterData : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Обновление уровня и выполнение всех логик подниятия уровней(условние поднятия внутри логик)
+    /// </summary>
     private void LevelUp()
     {
         _currentLevel++;

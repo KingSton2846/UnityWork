@@ -13,11 +13,6 @@ public class PlayerController : MonoBehaviour
     private PlayerInput _playerInput;
     private CharacterData _characterData;
 
-    public float SpeedMod
-    {
-        get => _speedMod;
-        set => _speedMod = value;
-    }
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -25,6 +20,15 @@ public class PlayerController : MonoBehaviour
         _characterData = GetComponent<CharacterData>();
     }
 
+    void FixedUpdate()
+    {
+        _rb.linearVelocity = new Vector2(_moveInput.x * (_moveSpeed + _speedMod), _rb.linearVelocity.y);
+    }
+
+    /// <summary>
+    /// Загрузка конфигураций скорости и высоты прыжка
+    /// </summary>
+    /// <param name="config"></param>
     public void LoadConfig(PlayerConfigSO config)
     {
         if (config == null) return;
@@ -33,9 +37,14 @@ public class PlayerController : MonoBehaviour
         _jumpForce = config.jumpForce;
     }
 
-    void FixedUpdate()
+    /// <summary>
+    /// Загрузка модификатора скорости.
+    /// Здесь и вправду нужени ограничители максимального и минимального модификатора, которые могут изменятся при поднятии уровня.
+    /// </summary>
+    /// <param name="speedMod"></param>
+    public void LoadSpeedMod(float speedMod)
     {
-        _rb.linearVelocity = new Vector2(_moveInput.x * (_moveSpeed + _speedMod), _rb.linearVelocity.y);
+        _speedMod = speedMod;
     }
 
     public void OnMove(InputValue value)
