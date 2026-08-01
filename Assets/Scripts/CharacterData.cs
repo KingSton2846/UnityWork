@@ -1,10 +1,9 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System;
 
 public class CharacterData : MonoBehaviour
 {
-    //Список логик подниятия уровней
-    [SerializeField] private List<MonoBehaviour> _levelUpActions;
+    public event Action<int> OnChangeLevel;
 
     [SerializeField] private int _score = 0;
     [SerializeField] private int _currentLevel = 1;
@@ -19,23 +18,11 @@ public class CharacterData : MonoBehaviour
         _score += score;
         if(_score >= _scoreToNextLevel)
         {
-            LevelUp();
-        }
-    }
+            _currentLevel++;
+            _score -= _scoreToNextLevel;
+            _scoreToNextLevel += 10;
 
-    /// <summary>
-    /// Обновление уровня и выполнение всех логик подниятия уровней(условние поднятия внутри логик)
-    /// </summary>
-    private void LevelUp()
-    {
-        _currentLevel++;
-        _score -= _scoreToNextLevel;
-        _scoreToNextLevel += 10;
-
-        foreach(var actions in _levelUpActions)
-        {
-            if (actions is ILevelUp levelUp == false) return;
-            levelUp.LevelUp(this, _currentLevel);
+            OnChangeLevel?.Invoke(_currentLevel);
         }
     }
 }
