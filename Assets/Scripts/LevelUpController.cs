@@ -6,12 +6,12 @@ public class LevelUpController : MonoBehaviour
     //Список логик подниятия уровней
     [SerializeField] private List<MonoBehaviour> _levelUpActions;
 
-    private CharacterData _characterData;
+    private LevelData _levelData;
 
     private void Start()
     {
-        _characterData = GetComponent<CharacterData>();
-        _characterData.OnChangeLevel += LevelUp;
+        _levelData = GetComponent<LevelData>();
+        _levelData.OnValueChanged += LevelUp;
     }
 
     /// <summary>
@@ -22,7 +22,7 @@ public class LevelUpController : MonoBehaviour
         foreach (var actions in _levelUpActions)
         {
             if (actions is ILevelUp levelUp == false) return;
-            levelUp.LevelUp(_characterData, currentLevel);
+            levelUp.LevelUp(currentLevel);
         }
     }
 }

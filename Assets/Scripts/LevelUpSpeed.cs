@@ -10,7 +10,7 @@ public class LevelUpSpeed : MonoBehaviour, ILevelUp
     /// </summary>
     /// <param name="data"></param>
     /// <param name="level"></param>
-    public void LevelUp(CharacterData data, int level)
+    public void LevelUp(int level)
     {
         if (level %_minLevel == 0) return;
         PlayerController playerController = GetComponent<PlayerController>();

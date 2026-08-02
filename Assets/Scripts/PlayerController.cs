@@ -11,13 +11,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 _moveInput;
 
     private PlayerInput _playerInput;
-    private CharacterData _characterData;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
-        _characterData = GetComponent<CharacterData>();
     }
 
     void FixedUpdate()
@@ -57,7 +55,6 @@ public class PlayerController : MonoBehaviour
         if (value.isPressed && IsGrounded())
         {
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _jumpForce);
-            _characterData.ScoreUp(10);
         }
     }
 

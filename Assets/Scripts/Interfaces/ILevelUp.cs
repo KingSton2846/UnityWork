@@ -1,5 +1,5 @@
 public interface ILevelUp
 {
-    void LevelUp(CharacterData data, int level);
+    void LevelUp(int level);
     int MinLevel { get; }
 }
