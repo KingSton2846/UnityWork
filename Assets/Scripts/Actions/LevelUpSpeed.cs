@@ -3,6 +3,7 @@ using UnityEngine;
 public class LevelUpSpeed : MonoBehaviour, ILevelUp
 {
     [SerializeField] private int _minLevel = 5;
+    [SerializeField] private int _speedMode = 3;
     public int MinLevel => _minLevel;
 
     /// <summary>
@@ -12,10 +13,10 @@ public class LevelUpSpeed : MonoBehaviour, ILevelUp
     /// <param name="level"></param>
     public void LevelUp(int level)
     {
-        if (level %_minLevel == 0) return;
-        PlayerController playerController = GetComponent<PlayerController>();
-        if (playerController == null) return;
+        if (level % _minLevel != 0) return;
+        SpeedModeData speedModeData = GetComponent<SpeedModeData>();
+        if (speedModeData == null) return;
 
-        playerController.LoadSpeedMod(level);
+        speedModeData.Add(_speedMode);
     }
 }

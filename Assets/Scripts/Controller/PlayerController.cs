@@ -6,16 +6,18 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private float _moveSpeed = 5f;
     private float _jumpForce = 10f;
-    private float _speedMod = 0;
+    private int _speedMod = 0;
 
     private Vector2 _moveInput;
-
+    private SpeedModeData _speedModeData;
     private PlayerInput _playerInput;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
+        _speedModeData = GetComponent<SpeedModeData>();
+        _speedModeData.OnValueChanged += LoadSpeedMod;
     }
 
     void FixedUpdate()
@@ -37,10 +39,9 @@ public class PlayerController : MonoBehaviour
 
     /// <summary>
     /// «агрузка модификатора скорости.
-    /// «десь и вправду нужени ограничители максимального и минимального модификатора, которые могут измен€тс€ при подн€тии уровн€.
     /// </summary>
     /// <param name="speedMod"></param>
-    public void LoadSpeedMod(float speedMod)
+    public void LoadSpeedMod(int speedMod)
     {
         _speedMod = speedMod;
     }
@@ -61,5 +62,10 @@ public class PlayerController : MonoBehaviour
     private bool IsGrounded()
     {
         return transform.position.y <= 0.1f;
+    }
+
+    private void OnDestroy()
+    {
+        _speedModeData.OnValueChanged -= LoadSpeedMod;
     }
 }
